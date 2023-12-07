@@ -168,7 +168,7 @@ for i in {1..22}; do
 done
 
 output_final=../results_tmp/GEM/
+mkdir -p ${output_final}
 
-cat ${output}${output_filename}.chrALL.GEM.out | gzip > ${output_final}${output_filename}.chrALL.GEM.out.gz
-
+gzip < "${output}${output_filename}.chrALL.GEM.out" > "${output_final}${output_filename}.chrALL.GEM.out.gz"
 rm ${output}${output_filename}.chrALL.GEM.out

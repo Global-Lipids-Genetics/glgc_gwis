@@ -69,16 +69,10 @@ for chr in {1..22}; do
 
 done
 
-## This section should not be removed. It is important to note that it modifies the header
 output_final=../results_for_upload/MAGEE/
 mkdir -p ${output_final}
 
-cat ${output}${output_filename}.chrALL.MAGEE.out | sed '1s/^/SNPID\tCHR\tPOS\tNon_Effect_Allele\tEffect_Allele\tN_Samples\tAF\tBeta_Marginal\tSE_Beta_Marginal\tBeta_G\tBeta_GxE\tSE_Beta_G\tSE_Beta_GxE\tCov_Beta_G_GxE\tP_Value_Marginal\tP_Value_Interaction\tP_Value_Joint\n/'| gzip > ${output_final}${output_filename}.chrALL.MAGEE.out.gz
-
+gzip < "${output}${output_filename}.chrALL.MAGEE.out" > "${output_final}${output_filename}.chrALL.MAGEE.out.gz"
 rm ${output}${output_filename}.chrALL.MAGEE.out
 
 echo "Merged MAGEE output files successfully!"
-
-
-
-
