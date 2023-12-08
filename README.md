@@ -33,8 +33,8 @@ Alternatively, you can install each individual software. Note that studies will 
 - R (4.1.0 or above)
 
 ## Overview
-A flowchart overview of the [analysis plan](#analysisplan) is provided: `./helper/2023_GLGC_Analysis_Plan.pdf`
-![2024 GLGC Analysis Plan](helper/2023_GLGC_Analysis_Plan.svg)
+A flowchart overview of the [analysis plan](#analysisplan) is provided: `./helper/2024_GLGC_Analysis_Plan.pdf`
+![2024 GLGC Analysis Plan](helper/2024_GLGC_Analysis_Plan.svg)
 
 ## Analysis Plan
 The analysis plan can be found here: [GLGC 2024 - Cohort Analysis Plan](https://docs.google.com/document/d/1x8F1o4krajNPLwoeJwzirMLveVs1HGlF1Z2eSnBGjo0/edit?usp=sharing) 
