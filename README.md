@@ -1,6 +1,6 @@
-# GLGC 2023 Analysis Pipeline
+# GLGC 2024 Cohort Analysis Pipeline
 
-This repo contains all the necessary scripts for study cohorts to run through the GLGC 2023 Analysis Pipeline. If you are interested in joining the [Global Lipids Genetics Consortium](http://www.lipidgenetics.org/), please contact Gina Peloso <gpeloso@bu.edu>.
+This repo contains all the necessary scripts for study cohorts to run through the GLGC 2024 Cohort Analysis Pipeline. If you are interested in joining the [Global Lipids Genetics Consortium](http://www.lipidgenetics.org/), please contact Gina Peloso <gpeloso@bu.edu>.
 
 Current version: 1.0
 
@@ -13,7 +13,7 @@ Current version: 1.0
 
 ## Installation
 
-To install the GLGC 2023 Analysis Pipeline, run the following code: 
+To download the relevant scripts and files for GLGC 2024 Cohort Analysis Pipeline, run the following code: 
 ```bash
 git clone https://github.com/Global-Lipids-Genetics/glgc_gwis.git
 ```
@@ -34,10 +34,10 @@ Alternatively, you can install each individual software. Note that studies will 
 
 ## Overview
 A flowchart overview of the [analysis plan](#analysisplan) is provided: `./helper/2023_GLGC_Analysis_Plan.pdf`
-![2023 GLGC Analysis Plan](helper/2023_GLGC_Analysis_Plan.svg)
+![2024 GLGC Analysis Plan](helper/2023_GLGC_Analysis_Plan.svg)
 
 ## Analysis Plan
-The analysis plan can be found here: [GLGC 2023 - Cohort Analysis Plan](https://docs.google.com/document/d/1x8F1o4krajNPLwoeJwzirMLveVs1HGlF1Z2eSnBGjo0/edit?usp=sharing) 
+The analysis plan can be found here: [GLGC 2024 - Cohort Analysis Plan](https://docs.google.com/document/d/1x8F1o4krajNPLwoeJwzirMLveVs1HGlF1Z2eSnBGjo0/edit?usp=sharing) 
 
 ## Contact
 If you have any questions or feedback, please open an issue in this repository or contact the appropriate person listed in the analysis plan document. 
