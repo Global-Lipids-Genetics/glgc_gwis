@@ -54,7 +54,7 @@ kin.mat <- pcrelateToMatrix(mypcrel,sample.include = pheno$sample.id)
 
 ## Generate the null model for LDLC
 # Adjust the variable names to reflect column names in pheno
-fomula <- as.formula(paste(outcome, " ~ ", paste(exposure, covariates, collapse= "+")))
+fomula <- as.formula(paste(outcome, " ~ ", paste(c(exposure, covariates), collapse= "+")))
 
 obj_nullmodel <- GMMAT::glmmkin(fomula,data=pheno,family=gaussian(link = "identity"),id = "sample.id", kins = kin.mat)
 
