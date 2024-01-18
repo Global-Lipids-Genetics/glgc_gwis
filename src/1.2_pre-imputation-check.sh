@@ -28,7 +28,7 @@
 ## ---------------------------------------------------------------------------------------------------------------------------- 
 ## 	IMPORTANT NOTE: 																																																							
 ## 			The user MUST download the VCF version (GRCh38) of the TOPMed reference file prior to running this script. 							  
-##			The file must be downloaded directly from the website: https://bravo.sph.umich.edu/freeze5/hg38/												
+##			The file must be downloaded directly from the website: https://legacy.bravo.sph.umich.edu/freeze5/hg38/												
 ##			Please download the file to the ../data/ directory and do not change the file name.																			
 ## 																																																															
 ##################################################################################################################################
