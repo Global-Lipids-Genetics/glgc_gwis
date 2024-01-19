@@ -77,7 +77,8 @@ output_filename=${10} # Path and prefix for output files
 output=../results_tmp/GEM/${outcome}/${exposure}/
 mkdir -p ${output}
 
-file_prefix=$(basename ${imputation_file} | cut -d. -f1-10)
+file_prefix=$(basename ${imputation_file} | cut -d. -f2-10)
+directory=$(dirname ${imputation_file})
 
 for i in {1..22}; do
 
@@ -85,7 +86,7 @@ for i in {1..22}; do
 
 ## update this GEM path to the appropriate location/version
 		../tools/GEM \
-		   --bgen ${imputation_file}${i}.bgen \
+		   --bgen ${directory}/chr${i}.${file_prefix}.bgen \
 		   --pheno-file ${pheno} \
 		   --delim ${delim} \
 		   --sampleid-name ${sampleID} \
@@ -103,7 +104,7 @@ for i in {1..22}; do
 	elif [[ ${file_type} = 'BGEN' ]] && [[ ${sample_file} != 'NA' ]]; then
 
 		../tools/GEM \
-		   --bgen ${imputation_file}${i}.bgen \
+		   --bgen ${directory}/chr${i}.${file_prefix}.bgen \
 		   --sample ${sample_file} \
 		   --pheno-file ${pheno} \
 		   --delim ${delim} \
