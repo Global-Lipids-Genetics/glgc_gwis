@@ -5,8 +5,8 @@
 ## 	Script Name: 4.3.1_perform-GWIS_GEM.sh																						
 ## 	Description: This script runs GEM using the input variables as GEM-specific parameters.  						
 ## 	Authors: Jacqueline S. Dron <jdron@broadinstitute.org>																		
-## 	Date: 2023-05-15																											
-## 	Version: 1.0																												
+## 	Date: 2024-01-28																											
+## 	Version: 1.1																												
 ## 																																
 ## ---------------------------------------------------------------------------------------------------------------------------- 
 ## 	Usage:																													
@@ -39,7 +39,7 @@
 ##																																
 ## ---------------------------------------------------------------------------------------------------------------------------- 
 ## 	Output: 																													
-## 			This script will produce a  ... 
+## 			This script will produce GEM result files and logs.
 ## 																																
 ## ---------------------------------------------------------------------------------------------------------------------------- 
 ## 	Example 1: 																														
@@ -77,6 +77,9 @@ output_filename=${10} # Path and prefix for output files
 output=../results_tmp/GEM/${outcome}/${exposure}/
 mkdir -p ${output}
 
+log_output=../results_tmp/GEM/logs/${outcome}/${exposure}/
+mkdir -p ${log_output}
+
 file_prefix=$(basename ${imputation_file} | cut -d. -f2-10)
 directory=$(dirname ${imputation_file})
 
@@ -98,7 +101,7 @@ for i in {1..22}; do
 		   --scale 0 \
 		   --threads 8 \
 		   --out ${output}${output_filename}.chr${i} \
-		   --output-style full 
+		   --output-style full > ${log_output}${output_filename}.chr${i}.log 
 
 ## update this GEM path to the appropriate location/version
 	elif [[ ${file_type} = 'BGEN' ]] && [[ ${sample_file} != 'NA' ]]; then
@@ -117,7 +120,7 @@ for i in {1..22}; do
 		   --scale 0 \
 		   --threads 8 \
 		   --out ${output}${output_filename}.chr${i} \
-		   --output-style full 
+		   --output-style full > ${log_output}${output_filename}.chr${i}.log 
 
 ## update this GEM path to the appropriate location/version
 	elif [[ ${file_type} = 'BED' ]]; then
@@ -135,7 +138,7 @@ for i in {1..22}; do
 		   --scale 0 \
 		   --threads 8 \
 		   --out ${output}${output_filename}.chr${i} \
-		   --output-style full 
+		   --output-style full > ${log_output}${output_filename}.chr${i}.log  
 
 ## update this GEM path to the appropriate location/version
 	elif [[ ${file_type} = 'PGEN' ]]; then
@@ -153,7 +156,7 @@ for i in {1..22}; do
 		   --scale 0 \
 		   --threads 8 \
 		   --out ${output}${output_filename}.chr${i} \
-		   --output-style full 
+		   --output-style full > ${log_output}${output_filename}.chr${i}.log  
 
 	fi  	
 
