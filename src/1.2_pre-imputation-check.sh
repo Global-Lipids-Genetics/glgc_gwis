@@ -5,8 +5,8 @@
 ## 	Script Name: 1.2_pre-imputation-check.sh																																										
 ## 	Description: This script checks files prior for imputation with the TOPMed reference panel ONLY. It is not for 1KG or HRC.  
 ## 	Authors: Jacqueline S. Dron <jdron@broadinstitute.org>																																			
-## 	Date: 2023-05-03																																																						
-## 	Version: 1.0																																																								
+## 	Date: 2024-02-12																																																						
+## 	Version: 2.0																																																								
 ## 																																																															
 ## ---------------------------------------------------------------------------------------------------------------------------- 
 ## 	Usage:																																																											
@@ -78,11 +78,36 @@ file_prefix=$(basename ${geno_input} | cut -d. -f1-10) # the prefix of the genot
 			wget https://hgdownload.cse.ucsc.edu/goldenpath/hg38/liftOver/hg38ToHg19.over.chain.gz -P ../tools/liftover 
 			
 		### Complete the GRCh38 to hg19 liftover
-			../tools/liftover/liftOver PASS.Variants.TOPMed_freeze5_hg38_dbSNP.tab.gz ../tools/liftoverhg38ToHg19.over.chain.gz ../data/PASS.Variants.TOPMed_freeze5_hg19_dbSNP.bed ../data/PASS.Variants.TOPMed_freeze5_hg19_dbSNP.failed.bed 
+			# Convert the TOPMed .tab.gz to a .bed file for proper liftOver input format
+			# NOTE THAT THIS WILL PRODUCE A VERY LARGE FILE! (>25GB)
+		  zcat /medpop/esp2/jdron/projects/glgc/02_cohort_analysis/03_glgc_internal/data/PASS.Variants.TOPMed_freeze5_hg38_dbSNP.tab.gz | awk 'NR==1 {print "CHROM","POS","ID","end"} NR>1 {print "chr"$1,$2,$2+1,$3}' | tail -n +2 > ../data/PASS.Variants.TOPMed_freeze5_hg38_dbSNP.bed
+
+			../tools/liftover/liftOver ../data/PASS.Variants.TOPMed_freeze5_hg38_dbSNP.bed ../tools/liftoverhg38ToHg19.over.chain.gz ../data/PASS.Variants.TOPMed_freeze5_hg19_dbSNP.bed ../data/PASS.Variants.TOPMed_freeze5_hg19_dbSNP.failed.bed 
+
+			rm ../data/PASS.Variants.TOPMed_freeze5_hg38_dbSNP.bed # Remove this large file now that it is no longer needed
+
+			# Generate TOPMed .tab.gz using the hg19 .bed that was just generated
+			zcat ../data/PASS.Variants.TOPMed_freeze5_hg38_dbSNP.tab.gz | \
+					awk 'BEGIN { FS = OFS = "\t" }
+					     # Process the first file (hg38.tab) to store IDs
+					     NR == FNR { ids[$4] = $0; next }
+					     # Process the second file (hg19.bed)
+					     FNR == 1 { print "#CHROM", "POS", "ID", "REF", "ALT", "AC", "AN", "AF"; next }
+					     # Check if the ID test_hg38.tab matches an ID in hg19.bed
+					     $3 in ids { 
+					         # Split the values from hg38.tab and assign them to corresponding fields
+					         split(ids[$3], values, "\t");
+					         $1 = values[1]; $2 = values[2]; $4 = $4; # Only update #CHROM and POS, keep REF unchanged
+					         # Remove 'chr' prefix from #CHROM
+					         gsub(/^chr/, "", $1);
+					         print $0 
+					     }' ../data/PASS.Variants.TOPMed_freeze5_hg19_dbSNP.bed - | gzip > ../data/PASS.Variants.TOPMed_freeze5_hg19_dbSNP.tab.gz
+
+			rm ../data/PASS.Variants.TOPMed_freeze5_hg19_dbSNP.bed # Remove this large file now that it is no longer needed
 
 			### With the (i) PLINK frequency files and the (ii) HRC-formatted TOPMed reference file, the tool can be run as follows	
-			./tools/HRC-1000G-check-bim.pl -b ../data/${file_prefix}.bim -f ../data/${file_prefix}.frq -r ../data/PASS.Variants.TOPMed_freeze5_hg19_dbSNP.bed -h -l ${geno_input} # This script produces a shell script called Run-plink.sh.
-  
+			./tools/HRC-1000G-check-bim.pl -b ../data/${file_prefix}.bim -f ../data/${file_prefix}.frq -r ../data/PASS.Variants.TOPMed_freeze5_hg19_dbSNP.tab.gz -h -l ${geno_input} # This script produces a shell script called Run-plink.sh.
+
   # GRCh 38
 	elif [[ ${build} -eq 38  ]]; then
 
