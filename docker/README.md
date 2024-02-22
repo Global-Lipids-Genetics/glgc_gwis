@@ -30,4 +30,5 @@ Test MAGEE
 
 ## Other available softwares
 
-bcftools, bgzip/tabix, plink, plink2
+bcftools, bgzip/tabix, plink, plink2, qctool, bgenix, cat-bgen, edit-bgen
+

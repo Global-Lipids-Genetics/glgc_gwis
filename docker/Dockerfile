@@ -26,17 +26,6 @@ RUN \
   libcurl4-openssl-dev \
   bcftools
 
-# Install QCtool
-
-WORKDIR /glgc/qctool
-
-RUN \
-  wget https://code.enkre.net/qctool/zip/release/qctool.tgz && \
-  unzip qctool.tgz && \
-  cd qctool && \
-  python3 ./waf configure --prefix=/local && \
-  python3 ./waf
-
 # Install R
 
 ARG R_VERSION=4.2.3
@@ -92,6 +81,42 @@ RUN wget https://s3.amazonaws.com/plink2-assets/alpha5/plink2_linux_avx2_2024010
   unzip plink2_linux_avx2_20240105.zip && \
   chmod 755 plink2 && \
   mv plink2 /local/bin
+
+# Install QCtool
+
+WORKDIR /glgc/qctool
+
+RUN \
+  wget https://code.enkre.net/qctool/zip/release/qctool.tgz && \
+  unzip qctool.tgz && \
+  cd qctool && \
+  python3 ./waf configure --prefix=/local && \
+  python3 ./waf && \
+  python3 ./waf install
+
+RUN \
+  ln -n /local/bin/qctool_v2.2.0 /local/bin/qctool
+
+# Install bgenix (require gcc-9/g++-9)
+
+WORKDIR /glgc/bgenix
+
+RUN apt update && \
+  apt install software-properties-common -y && \
+  add-apt-repository ppa:ubuntu-toolchain-r/ppa -y  && \
+  apt install gcc-9 g++-9 -y
+
+
+RUN wget http://code.enkre.net/bgen/tarball/release/bgen.tgz && \
+  tar -xf bgen.tgz
+
+WORKDIR /glgc/bgenix/bgen.tgz
+
+RUN CC=gcc-9 CXX=g++-9 python3 ./waf configure --prefix=/local
+
+RUN CC=gcc-9 CXX=g++-9 python3 ./waf
+
+RUN CC=gcc-9 CXX=g++-9 python3 ./waf install
 
 # Enviornment
 
