@@ -59,14 +59,17 @@ for chr in {1..22}; do
         --outfile "$outfile"
 done
 
-
+echo "MAGEE finished running!"
 
 ## Merge MAFEE output if chromosome files are separate
+
 for chr in {1..22}; do
-
   results=${output}${output_filename}.chr${chr}.magee.out
-  cat $results | sed '1d' >> ${output}${output_filename}.chrALL.MAGEE.out
-
+  if [[ $chr -eq 1 ]]; then
+    awk 'FNR==1 && NR!=1 {next} 1' $results > ${output}${output_filename}.chrALL.MAGEE.out
+  else
+    awk 'FNR>1' $results >> ${output}${output_filename}.chrALL.MAGEE.out
+  fi
 done
 
 output_final=../results_for_upload/MAGEE/
